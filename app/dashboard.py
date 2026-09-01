@@ -864,10 +864,10 @@ def main():
 
         st.markdown("### 📚 Documentation")
         st.markdown("- [API Documentation](http://localhost:8000/docs)")
-        st.markdown("- [GitHub Repository](#)")
+        st.markdown("- [GitHub Repository](https://github.com/athas-115/predictive-maintenance)")
         st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
-        st.markdown("### 🔗 Quick Links")
+        
         st.markdown("<div style='margin: 0.5rem 0;'></div>", unsafe_allow_html=True)
 
         # API Health Check
@@ -880,9 +880,11 @@ def main():
             else:
                 st.markdown("🔴")
 
-        if st.button("🔍 Check API", use_container_width=True, key="api_button"):
-            js = "window.open('http://localhost:8000/health', '_blank')"
-            st.components.v1.html(f"<script>{js}</script>", height=0)
+                st.link_button(
+            "🔍 Check API",
+            "http://localhost:8000/health",
+            use_container_width=True
+        )
 
         st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
