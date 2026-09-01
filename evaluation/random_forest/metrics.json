@@ -1,0 +1,38 @@
+{
+  "model_name": "random_forest",
+  "metrics": {
+    "accuracy": 0.9633333333333334,
+    "precision": 0.4787234042553192,
+    "recall": 0.8823529411764706,
+    "f1_score": 0.6206896551724138,
+    "specificity": 0.966183574879227,
+    "roc_auc": 0.9773474607234198
+  },
+  "classification_report": {
+    "No Failure": {
+      "precision": 0.9957325746799431,
+      "recall": 0.966183574879227,
+      "f1-score": 0.9807355516637478,
+      "support": 1449.0
+    },
+    "Failure": {
+      "precision": 0.4787234042553192,
+      "recall": 0.8823529411764706,
+      "f1-score": 0.6206896551724138,
+      "support": 51.0
+    },
+    "accuracy": 0.9633333333333334,
+    "macro avg": {
+      "precision": 0.7372279894676311,
+      "recall": 0.9242682580278487,
+      "f1-score": 0.8007126034180808,
+      "support": 1500.0
+    },
+    "weighted avg": {
+      "precision": 0.9781542628855059,
+      "recall": 0.9633333333333334,
+      "f1-score": 0.9684939911830425,
+      "support": 1500.0
+    }
+  }
+}

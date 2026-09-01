@@ -1,0 +1,38 @@
+{
+  "model_name": "lightgbm",
+  "metrics": {
+    "accuracy": 0.978,
+    "precision": 0.6216216216216216,
+    "recall": 0.9019607843137255,
+    "f1_score": 0.736,
+    "specificity": 0.9806763285024155,
+    "roc_auc": 0.9870498924207364
+  },
+  "classification_report": {
+    "No Failure": {
+      "precision": 0.9964936886395512,
+      "recall": 0.9806763285024155,
+      "f1-score": 0.9885217391304347,
+      "support": 1449.0
+    },
+    "Failure": {
+      "precision": 0.6216216216216216,
+      "recall": 0.9019607843137255,
+      "f1-score": 0.736,
+      "support": 51.0
+    },
+    "accuracy": 0.978,
+    "macro avg": {
+      "precision": 0.8090576551305864,
+      "recall": 0.9413185564080705,
+      "f1-score": 0.8622608695652174,
+      "support": 1500.0
+    },
+    "weighted avg": {
+      "precision": 0.9837480383609416,
+      "recall": 0.978,
+      "f1-score": 0.979936,
+      "support": 1500.0
+    }
+  }
+}

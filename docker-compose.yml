@@ -1,0 +1,150 @@
+services:
+  # ========================================================================
+  # FastAPI Backend Service
+  # ========================================================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    image: predictive_maintenance:latest
+    pull_policy: never
+    container_name: predictive_maintenance_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount data, models, and logs for persistence
+      - ./data:/app/data:rw
+      - ./models:/app/models:ro
+      - ./mlflow_logs:/app/mlflow_logs:ro
+      - ./evaluation:/app/evaluation:ro
+      - ./logs:/app/logs:rw
+    environment:
+      # API Configuration
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_RELOAD=False
+      - API_WORKERS=1
+      # MLflow Configuration
+      - MLFLOW_TRACKING_URI=./mlflow_logs
+      # Python Configuration
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    command: uvicorn app.app:app --host 0.0.0.0 --port 8000 --workers 1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - predictive_maintenance_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ========================================================================
+  # Streamlit Dashboard Service
+  # ========================================================================
+  dashboard:
+    image: predictive_maintenance:latest
+    pull_policy: never
+    container_name: predictive_maintenance_dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount data, models, and evaluation results (read-only where possible)
+      - ./data:/app/data:ro
+      - ./models:/app/models:ro
+      - ./evaluation:/app/evaluation:ro
+      - ./mlflow_logs:/app/mlflow_logs:ro
+    environment:
+      # Streamlit Configuration
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      # Python Configuration
+      - PYTHONUNBUFFERED=1
+    command: streamlit run app/dashboard.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - predictive_maintenance_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ========================================================================
+  # MLflow Tracking Server (Optional)
+  # ========================================================================
+  mlflow:
+    image: predictive_maintenance:latest
+    pull_policy: never
+    container_name: predictive_maintenance_mlflow
+    ports:
+      - "5001:5000"
+    volumes:
+      # Mount MLflow logs for experiment tracking
+      - ./mlflow_logs:/app/mlflow_logs:rw
+    environment:
+      # MLflow Configuration
+      - MLFLOW_BACKEND_STORE_URI=./mlflow_logs
+      - PYTHONUNBUFFERED=1
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri ./mlflow_logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - predictive_maintenance_network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# ============================================================================
+# Networks
+# ============================================================================
+networks:
+  predictive_maintenance_network:
+    driver: bridge
+    name: predictive_maintenance_net
+
+# ============================================================================
+# Named Volumes (Optional - for data persistence)
+# ============================================================================
+volumes:
+  data_volume:
+    driver: local
+  models_volume:
+    driver: local
+  mlflow_logs_volume:
+    driver: local
+  logs_volume:
+    driver: local
+
+# ============================================================================
+#  Access services:
+#    API: http://localhost:8000
+#    API Docs: http://localhost:8000/docs
+#    Dashboard: http://localhost:8501
+#    MLflow: http://localhost:5001
+# ============================================================================

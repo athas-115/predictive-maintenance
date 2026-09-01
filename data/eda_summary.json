@@ -1,0 +1,19 @@
+{
+  "total_samples": 10000,
+  "features": 14,
+  "failure_rate": 0.0339,
+  "imbalance_ratio": 28.49852507374631,
+  "missing_values": 0,
+  "product_types": [
+    "M",
+    "L",
+    "H"
+  ],
+  "failure_types": [
+    "TWF",
+    "HDF",
+    "PWF",
+    "OSF",
+    "RNF"
+  ]
+}
