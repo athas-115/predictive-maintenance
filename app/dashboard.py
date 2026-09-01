@@ -869,7 +869,7 @@ def main():
         st.markdown("---")
 
         st.markdown("### 📚 Documentation")
-        st.markdown("- [API Documentation](http://localhost:8000/docs)")
+        st.markdown(f"- [API Documentation](https://predictive-maintenance-api-2s8i.onrender.com/docs)")
         st.markdown("- [GitHub Repository](https://github.com/athas-115/predictive-maintenance)")
         st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
@@ -877,29 +877,31 @@ def main():
         st.markdown("<div style='margin: 0.5rem 0;'></div>", unsafe_allow_html=True)
 
         # API Health Check
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            st.markdown("**API Health**")
-        with col2:
-            if is_port_in_use(8000):
-                st.markdown("🟢")
-            else:
-                st.markdown("🔴")
+col1, col2 = st.columns([4, 1])
 
-                st.link_button(
-            "🔍 Check API",
-            "https://predictive-maintenance-api-2s8i.onrender.com/health",
-            use_container_width=True
-        )
+with col1:
+    st.markdown("**API Health**")
 
-        st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
+with col2:
+    if is_port_in_use(8000):
+        st.markdown("🟢")
+    else:
+        st.markdown("🔴")
+
+    st.link_button(
+        "🔍 Check API",
+        "https://predictive-maintenance-api-2s8i.onrender.com/health",
+        use_container_width=True
+    )
+
+st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
         
 
-        st.markdown("<div style='margin: 2rem 0;'></div>", unsafe_allow_html=True)
-        st.markdown("---")
-        st.markdown("**Version:** 1.0.0")
-        st.markdown("**Last Updated:** 2026-06-15")
+st.markdown("<div style='margin: 2rem 0;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+st.markdown("**Version:** 1.0.0")
+st.markdown("**Last Updated:** 2026-06-15")
 
 
 # ============================================================================
