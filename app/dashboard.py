@@ -10,9 +10,15 @@ This dashboard provides:
 """
 
 import os
+import requests
 import warnings
 import sys
 import contextlib
+
+try:
+    API_URL = st.secrets["API_URL"]
+except Exception:
+    API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 # Suppress warnings and stderr
 os.environ['LOKY_MAX_CPU_COUNT'] = str(os.cpu_count() or 4)
@@ -882,7 +888,7 @@ def main():
 
                 st.link_button(
             "🔍 Check API",
-            "http://localhost:8000/health",
+            "https://predictive-maintenance-api-2s8i.onrender.com/health",
             use_container_width=True
         )
 
