@@ -883,16 +883,25 @@ with col1:
     st.markdown("**API Health**")
 
 with col2:
-    if is_port_in_use(8000):
-        st.markdown("🟢")
-    else:
+    try:
+        health_response = requests.get(
+            "https://predictive-maintenance-api-2s8j.onrender.com/health",
+            timeout=10
+        )
+
+        if health_response.status_code == 200:
+            st.markdown("🟢")
+        else:
+            st.markdown("🔴")
+
+    except requests.exceptions.RequestException:
         st.markdown("🔴")
 
-    st.link_button(
-        "🔍 Check API",
-        "https://predictive-maintenance-api-2s8j.onrender.com/health",
-        use_container_width=True
-    )
+st.link_button(
+    "🔍 Check API",
+    "https://predictive-maintenance-api-2s8j.onrender.com/health",
+    use_container_width=True
+)
 
 st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
