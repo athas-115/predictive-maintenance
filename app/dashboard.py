@@ -869,7 +869,7 @@ def main():
         st.markdown("---")
 
         st.markdown("### 📚 Documentation")
-        st.markdown(f"- [API Documentation](https://predictive-maintenance-api-2s8i.onrender.com/docs)")
+        st.markdown(f"- [API Documentation](https://predictive-maintenance-api-2s8j.onrender.com/docs)")
         st.markdown("- [GitHub Repository](https://github.com/athas-115/predictive-maintenance)")
         st.markdown("<div style='margin: 1rem 0;'></div>", unsafe_allow_html=True)
 
@@ -890,7 +890,7 @@ with col2:
 
     st.link_button(
         "🔍 Check API",
-        "https://predictive-maintenance-api-2s8i.onrender.com/health",
+        "https://predictive-maintenance-api-2s8j.onrender.com/health",
         use_container_width=True
     )
 
